@@ -1,54 +1,85 @@
-
-
 <div class="view">
   <div class="header">
     <h1>Restaurante</h1>
     <i class="fas fa-bars"></i>
-  <div class="container">
-         <div class="col">
-      <div class="user-information"></div>
-      <div class="messages-area">
-        <ng-container *ngFor="let message of messages">
-                <p [className]="'message-' + (message.client == '1' ? 'left' : 'right') ">
-                  {{ message.content }}</p>
+    <div class="container">
+      <div class="col">
+        <div class="user-information"></div>
+        <div class="messages-area">
+          <ng-container *ngFor="let message of messages">
+            <p
+              [className]="
+                'message-' + (message.client == '1' ? 'left' : 'right')
+              "
+            >
+              {{ message.content }}
+            </p>
           </ng-container>
-      </div>
-        <div class="input-group">          
-          <button class="btn btn-outline-secondary" type="button" id="button-addon2">Option</button>
-          <input 
-            [(ngModel)]="client1Model"
-          type="text" placeholder="Entrez un message" 
-          (keyup.enter)="sendMessage( 1)"
-
+        </div>
+        <div class="input-group">
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            id="button-addon2"
+            (click)="openOptionDialog()"
           >
-          <button 
-          (click)="sendMessage(1)"
-          class="btn btn-outline-secondary" type="button" id="button-addon2">Envoyer
+            Option
+          </button>
+          <input
+            [(ngModel)]="client1Model"
+            type="text"
+            placeholder="Entrez un message"
+            (keyup.enter)="sendMessage(1)"
+          />
+          <button
+            (click)="sendMessage(1)"
+            class="btn btn-outline-secondary"
+            type="button"
+            id="button-addon2"
+          >
+            Envoyer
           </button>
         </div>
-    </div>
-    <div class="col">
-      <div class="user-information"></div>
-      <div class="messages-area">
-        <ng-container *ngFor="let message of messages">
-                <p [className]="'message-' + (message.client == '2' ? 'left' : 'right') ">
-                  {{ message.content }}</p>
-          </ng-container>
       </div>
-        <div class="input-group">          
-          <button class="btn btn-outline-secondary" type="button" id="button-addon2">Option</button>
+      <div class="col">
+        <div class="user-information"></div>
+        <div class="messages-area">
+          <ng-container *ngFor="let message of messages">
+            <p
+              [className]="
+                'message-' + (message.client == '2' ? 'left' : 'right')
+              "
+            >
+              {{ message.content }}
+            </p>
+          </ng-container>
+        </div>
+        <div class="input-group">
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            id="button-addon2"
+            (click)="(openOptionDialog)"
+          >
+            Option
+          </button>
           <input
             [(ngModel)]="client2Model"
-           type="text" placeholder="Entrez un message" 
-          (keyup.enter)="sendMessage( 2)"
-
+            type="text"
+            placeholder="Entrez un message"
+            (keyup.enter)="sendMessage(2)"
+          />
+          <button
+            (click)="sendMessage(2)"
+            style="border: red 5px solid"
+            class="btn btn-outline-secondary"
+            type="button"
+            id="button-addon2"
           >
-          <button 
-          (click)="sendMessage( 2)"
-          style="border: red 5px solid;" class="btn btn-outline-secondary" type="button" id="button-addon2">Envoyer
+            Envoyer
           </button>
         </div>
+      </div>
     </div>
   </div>
-
 </div>
