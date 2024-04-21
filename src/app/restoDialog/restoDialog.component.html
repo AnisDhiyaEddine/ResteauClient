@@ -1,0 +1,99 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">
+    <button type="button" class="btn btn-light" (click)="decIndex()">
+      &lt;
+    </button>
+    {{ options[optionIndex] }}
+    <button type="button" class="btn btn-light" (click)="incIndex()">
+      &gt;
+    </button>
+  </h4>
+</div>
+<div class="modal-body">
+  <form [ngSwitch]="optionIndex">
+    <div *ngSwitchCase="0" class="form-group">
+      <div>
+        <label for="question">Quel type réponse attendez-vous</label>
+      </div>
+      <div>
+        <input
+          type="radio"
+          name="question1"
+          [value]="requests[0]"
+          [(ngModel)]="Uquestion"
+        />
+        <label for="question1" class="m-2">{{ requests[0] }}</label>
+      </div>
+      <div>
+        <input
+          type="radio"
+          name="question2"
+          [value]="requests[1]"
+          [(ngModel)]="Uquestion"
+        />
+        <label for="question2" class="m-2">{{ requests[1] }}</label>
+      </div>
+      <div>
+        <input
+          type="radio"
+          name="question3"
+          [value]="requests[2]"
+          [(ngModel)]="Uquestion"
+        />
+        <label for="question3" class="m-2">{{ requests[2] }}</label>
+      </div>
+    </div>
+    <div *ngSwitchCase="1" class="form-group">
+      <label for="survey">Entrez votre question</label>
+      <input
+        [(ngModel)]="Pquestion"
+        type="text"
+        name="survey"
+        class="form-control"
+      />
+      <label for="choices">Entrez les choix</label>
+      <input
+        [(ngModel)]="choice1"
+        type="text"
+        name="choice1"
+        class="form-control"
+      />
+      <input
+        [(ngModel)]="choice2"
+        type="text"
+        name="choice2"
+        class="form-control"
+      />
+      <input
+        [(ngModel)]="choice3"
+        type="text"
+        name="choice3"
+        placeholder="Laissez vide pour ignorer le choix"
+        class="form-control"
+      />
+      <input
+        [(ngModel)]="choice4"
+        type="text"
+        name="choice4"
+        placeholder="Laissez vide pour ignorer le choix"
+        class="form-control"
+      />
+    </div>
+    <div *ngSwitchCase="2" class="form-group">
+      <ngb-datepicker #dp [(ngModel)]="dateValue" name="date" />
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-danger"
+    aria-label="Close"
+    (click)="activeModal.dismiss()"
+  >
+    Annuler
+  </button>
+  <button type="button" class="btn btn-primary" (click)="closeModal()">
+    Envoyer
+  </button>
+</div>

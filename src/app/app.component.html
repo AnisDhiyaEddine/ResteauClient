@@ -4,7 +4,7 @@
     <i class="fas fa-bars"></i>
     <div class="container">
       <div class="col">
-        <div class="user-information"></div>
+        <div class="user-information">Restaurant</div>
         <div class="messages-area">
           <ng-container *ngFor="let message of messages">
             <p
@@ -21,12 +21,12 @@
             class="btn btn-outline-secondary"
             type="button"
             id="button-addon2"
-            (click)="openOptionDialog()"
+            (click)="openRestoDialog()"
           >
             Option
           </button>
           <input
-            [(ngModel)]="client1Model"
+            [(ngModel)]="restoModel"
             type="text"
             placeholder="Entrez un message"
             (keyup.enter)="sendMessage(1)"
@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="col">
-        <div class="user-information"></div>
+        <div class="user-information">Client</div>
         <div class="messages-area">
           <ng-container *ngFor="let message of messages">
             <p
@@ -59,12 +59,12 @@
             class="btn btn-outline-secondary"
             type="button"
             id="button-addon2"
-            (click)="(openOptionDialog)"
+            (click)="openClientDialog()"
           >
             Option
           </button>
           <input
-            [(ngModel)]="client2Model"
+            [(ngModel)]="clientModel"
             type="text"
             placeholder="Entrez un message"
             (keyup.enter)="sendMessage(2)"

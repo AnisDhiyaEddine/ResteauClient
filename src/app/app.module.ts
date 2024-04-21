@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { ChatService } from './chat.service';
-import { OptionDialogComponent } from './optionDialog/optionDialog.component';
+import { RestoDialogComponent } from './restoDialog/restoDialog.component';
+import { ClientDialogComponent } from './clientDialog/clientDialog.component';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, OptionDialogComponent],
+  imports: [CommonModule, RestoDialogComponent, ClientDialogComponent],
   providers: [ChatService],
   bootstrap: [AppComponent],
 })

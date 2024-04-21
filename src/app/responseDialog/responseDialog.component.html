@@ -1,0 +1,129 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">
+    {{ option }}
+  </h4>
+</div>
+<div class="modal-body">
+  <div [ngSwitch]="option">
+    <div *ngSwitchCase="'YesNo'" class="form-group">
+      <input
+        type="radio"
+        name="Yes"
+        class="m-2"
+        value="Oui"
+        [(ngModel)]="YesNo"
+      />
+      <label for="Yes" class="m-8">Oui</label>
+      <input
+        type="radio"
+        name="No"
+        class="m-2"
+        value="Non"
+        [(ngModel)]="YesNo"
+      />
+      <label for="No" class="m-8">Non</label>
+    </div>
+    <div *ngSwitchCase="'Reservation'" class="form-group">
+      <!--Date time-->
+      <label for="dp">Choisir la date</label>
+      <div class="input-group">
+        <input
+          class="form-control"
+          placeholder="dd/mm/yyyy"
+          name="dp"
+          [(ngModel)]="dateValue"
+          ngbDatepicker
+          #d="ngbDatepicker"
+        />
+        <button
+          class="btn btn-outline-secondary bi bi-calendar3"
+          (click)="d.toggle()"
+          type="button"
+        ></button>
+      </div>
+      <!--<label>Choisir l'heure</label>
+      <ngb-timePicker [(ngModel)]="timeValue"></ngb-timePicker>-->
+
+      <!--nb Personne-->
+      <label for="nbPersonne">Nombre de personnes</label>
+      <input
+        [(ngModel)]="nbPersonne"
+        type="number"
+        name="nbPersonne"
+        class="form-control"
+      />
+
+      <!--nb Enfants-->
+      <label for="nbEnfants">Nombre d'enfants</label>
+      <input
+        [(ngModel)]="nbEnfants"
+        type="number"
+        name="nbEnfants"
+        class="form-control"
+      />
+
+      <!--preferences-->
+      <label for="preferences">Préférences</label>
+      <input
+        [(ngModel)]="preferences"
+        type="text"
+        name="preferences"
+        placeholder="Ex: Sans gluten, sans lactose, etc."
+        class="form-control"
+      />
+    </div>
+    <div *ngSwitchCase="'Order'" class="form-group">
+      <!--Entrée-->
+      <label for="entree">Entrée</label>
+      <select [(ngModel)]="start" name="entree" class="form-control">
+        <option *ngFor="let start of starts" [value]="start">
+          {{ start }}
+        </option>
+      </select>
+
+      <!--Plat principal-->
+      <label for="plat">Plat principal</label>
+      <select [(ngModel)]="dish" name="plat" class="form-control">
+        <option *ngFor="let dish of dishes" [value]="dish">{{ dish }}</option>
+      </select>
+
+      <!--Dessert-->
+      <label for="dessert">Dessert</label>
+      <select [(ngModel)]="dessert" name="dessert" class="form-control">
+        <option *ngFor="let dessert of desserts" [value]="dessert">
+          {{ dessert }}
+        </option>
+      </select>
+    </div>
+    <div *ngSwitchCase="'Poll'" class="form-group">
+      <div class="input-group" *ngFor="let poll of pollBody; let i = index">
+        <div>
+          <label for="question{{ i }}" class="m-2">{{ poll.question }}</label>
+        </div>
+        <div *ngFor="let choice of poll.answers; let j = index">
+          <input
+            type="radio"
+            class="m-2"
+            name="question{{ j }}"
+            [value]="choice"
+            [(ngModel)]="answers[i]"
+          />
+          <label for="question{{ j }}" class="m-2">{{ choice }}</label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-danger"
+        aria-label="Close"
+        (click)="activeModal.dismiss()"
+      >
+        Annuler
+      </button>
+      <button type="button" class="btn btn-primary" (click)="closeModal()">
+        Envoyer
+      </button>
+    </div>
+  </div>
+</div>

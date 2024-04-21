@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">
+    Demande de réponse par oui ou non
+  </h4>
+</div>
+<div class="modal-body">
+  Voulez-vous une réponse directe et précise (Oui/Non) ?
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-danger"
+    aria-label="Close"
+    (click)="activeModal.dismiss()"
+  >
+    Annuler
+  </button>
+  <button type="button" class="btn btn-primary" (click)="closeModal()">
+    OK
+  </button>
+</div>

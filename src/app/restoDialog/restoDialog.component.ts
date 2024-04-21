@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -8,39 +8,47 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-option-dialog',
+  selector: 'app-resto-dialog',
   standalone: true,
   imports: [CommonModule, NgbDatepickerModule, FormsModule],
-  templateUrl: './optionDialog.component.html',
-  styleUrl: './optionDialog.component.css',
+  templateUrl: './restoDialog.component.html',
+  styleUrl: './restoDialog.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OptionDialogComponent {
+export class RestoDialogComponent {
   activeModal: NgbActiveModal = inject(NgbActiveModal);
   dateValue: NgbDateStruct | null = null;
   optionIndex = 0;
-  question = '';
+  Uquestion: any;
+  Pquestion = '';
+  choice1 = '';
+  choice2 = '';
+  choice3 = '';
+  choice4 = '';
 
   closeModal() {
-    let result = '';
+    let result: any;
     switch (this.optionIndex) {
       case 0:
-        result = this.question;
+        result = { type: ['Text'], content: this.Uquestion };
         break;
       case 1:
-        result = this.question;
-        break;
-      case 2:
-        result = this.dateValue
-          ? this.dateValue.day +
-            '/' +
-            this.dateValue.month +
-            '/' +
-            this.dateValue.day
-          : '';
+        result = {
+          type: ['Poll'],
+          content: [
+            {
+              question: this.Pquestion,
+              answers: [
+                this.choice1,
+                this.choice2,
+                this.choice3,
+                this.choice4,
+              ].filter((c) => c),
+            },
+          ],
+        };
         break;
       default:
-        this.activeModal.close();
         break;
     }
     this.activeModal.close(result);
@@ -53,7 +61,8 @@ export class OptionDialogComponent {
       (this.optionIndex - 1 + this.options.length) % this.options.length;
   }
 
-  options = ['ultimatum', 'survey', 'date'];
+  options = ['Request', 'Poll'];
+  requests = ['YesNo', 'Order', 'Reservation'];
 
   // get result of activeModal.close() in app.component.ts
 }

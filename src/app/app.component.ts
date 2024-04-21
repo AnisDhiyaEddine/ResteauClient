@@ -12,7 +12,9 @@ import { RouterOutlet } from '@angular/router';
 import { AppModule } from './app.module';
 import { ChatService } from './chat.service';
 import { FormsModule } from '@angular/forms';
-import { OptionDialogComponent } from './optionDialog/optionDialog.component';
+import { RestoDialogComponent } from './restoDialog/restoDialog.component';
+import { ClientDialogComponent } from './clientDialog/clientDialog.component';
+import { ResponseDialogComponent } from './responseDialog/responseDialog.component';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +23,7 @@ import { OptionDialogComponent } from './optionDialog/optionDialog.component';
     CommonModule,
     FormsModule,
     NgbDatepickerModule,
-    OptionDialogComponent,
+    RestoDialogComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -31,35 +33,78 @@ export class AppComponent {
 
   constructor(private chatService: ChatService) {
     chatService.listen('broadcast').subscribe((data: any) => {
+      if (this.requests.includes(data.content)) {
+        const modalRef = this.modalService.open(ResponseDialogComponent, {
+          centered: true,
+        });
+        modalRef.componentInstance.option = data.content;
+        modalRef.closed.subscribe((result) => {
+          this.chatService.sendMessage(
+            data.client === 1 ? 2 : 1,
+            result.type,
+            JSON.stringify({ content: result.content })
+          );
+        });
+      } else if (data.type[0] === 'Poll') {
+        const modalRef = this.modalService.open(ResponseDialogComponent, {
+          centered: true,
+        });
+        modalRef.componentInstance.option = 'Poll';
+        modalRef.componentInstance.pollBody = JSON.parse(data.content);
+        modalRef.closed.subscribe((result) => {
+          this.chatService.sendMessage(
+            data.client === 1 ? 2 : 1,
+            result.type,
+            JSON.stringify({ content: result.content })
+          );
+        });
+      }
       this.messages.push(data);
     });
   }
 
-  client1Model = '';
-  client2Model = '';
+  messageType = ['Text'];
+  restoModel: any;
+  clientModel: any;
 
   title = 'resteau';
+  requests = ['YesNo', 'Order', 'Reservation'];
 
   messages: any[] = [];
 
-  openOptionDialog() {
-    const modalRef = this.modalService.open(OptionDialogComponent, {
+  openRestoDialog() {
+    const modalRef = this.modalService.open(RestoDialogComponent, {
       centered: true,
     });
     modalRef.closed.subscribe((result) => {
-      console.log(result);
+      const { type, content } = result;
+      this.messageType = type;
+      this.restoModel = content;
+      this.sendMessage(1);
     });
   }
 
-  closeOptionDialog() {
-    this.modalService.dismissAll();
+  openClientDialog() {
+    const modalRef = this.modalService.open(ClientDialogComponent, {
+      centered: true,
+    });
+    modalRef.closed.subscribe((result) => {
+      const { type, content } = result;
+      this.messageType = type;
+      this.clientModel = content;
+      this.sendMessage(2);
+    });
   }
 
   sendMessage(client: number) {
     this.chatService.sendMessage(
       client,
-      client === 1 ? this.client1Model : this.client2Model
+      this.messageType,
+      JSON.stringify({
+        content: client === 1 ? this.restoModel : this.clientModel,
+      })
     );
-    client === 1 ? (this.client1Model = '') : (this.client2Model = ''); // cleaning the input
+    client === 1 ? (this.restoModel = '') : (this.clientModel = ''); // cleaning the input
+    this.messageType = ['Text'];
   }
 }
